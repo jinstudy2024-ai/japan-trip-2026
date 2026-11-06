@@ -24,6 +24,7 @@ header p{margin:6px 0 0;color:var(--muted);max-width:62ch}
 .tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--pinText)}
 .tabs button:focus-visible,.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #map{display:none}#gmap{display:block;width:100%;height:clamp(360px,62vw,600px);border:0}
+.maphead .gbig{background:var(--panel);color:var(--accent);border:1px solid var(--accent)}
 .mapbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .maphead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding:12px 16px;border-bottom:1px solid var(--line)}
 .maphead strong{font-weight:600}
@@ -86,9 +87,9 @@ svg{display:block;width:100%;height:auto;max-width:100%}
 </header>
 <div class="tabs" role="tablist" id="tabs"></div>
 <section class="mapbox">
-  <div class="maphead"><strong id="vt"></strong><span id="vs"></span><a id="gm" class="gm" href="#" target="_blank" rel="noopener">구글 지도에서 경로 보기 ↗</a></div>
+  <div class="maphead"><strong id="vt"></strong><span id="vs"></span><a id="gbig" class="gm gbig" href="#" target="_blank" rel="noopener">지도 크게 보기 ↗</a><a id="gm" class="gm" href="#" target="_blank" rel="noopener">구글 지도에서 경로 보기 ↗</a></div>
   <svg id="map" viewBox="0 0 1000 600" role="img" aria-label="이동 경로 지도"></svg>
-  <iframe id="gmap" title="구글 지도 이동 경로" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <iframe id="gmap" title="구글 지도 이동 경로" loading="lazy" allow="fullscreen" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
   <div class="legend">
     <span><i style="border-color:var(--walk)"></i>걷기</span>
     <span><i style="border-color:var(--car)"></i>렌트카</span>
@@ -133,7 +134,9 @@ function draw(v,hl){
       la=(la0+la1)/2;ln=(ln0+ln1)/2;const w=document.getElementById('gmap').clientWidth||900,h=document.getElementById('gmap').clientHeight||560;
       const zx=Math.log2(360*w/256/Math.max(ln1-ln0,1e-4)),zy=Math.log2(180*h/256/Math.max((la1-la0)/Math.cos(la*Math.PI/180),1e-4));
       z=Math.max(3,Math.min(17,Math.floor(Math.min(zx,zy)-0.3)))}
-    document.getElementById('gmap').src='https://www.google.com/maps/d/embed?mid=1M2dx3bHahj8zn5EMwmVHZ5tEqWxH4Iw&ll='+la.toFixed(5)+','+ln.toFixed(5)+'&z='+z+'&hl=ko&ehbc=2E312F';
+    const q='mid=1M2dx3bHahj8zn5EMwmVHZ5tEqWxH4Iw&ll='+la.toFixed(5)+','+ln.toFixed(5)+'&z='+z+'&hl=ko';
+    document.getElementById('gmap').src='https://www.google.com/maps/d/embed?'+q+'&ehbc=2E312F';
+    document.getElementById('gbig').href='https://www.google.com/maps/d/viewer?'+q;
   }
   { const ss=D.stops.filter(s=>s.v===v||VIEWS[v].x.includes(s.n)).sort((a,b)=>(VIEWS[v].x.includes(a.n)?-1:0)-(VIEWS[v].x.includes(b.n)?-1:0)||a.n-b.n); const pts=[]; ss.forEach(s=>{const k=s.lat.toFixed(5)+','+s.lng.toFixed(5); if(pts[pts.length-1]!==k) pts.push(k)}); document.getElementById('gm').href='https://www.google.com/maps/dir/'+pts.slice(0,10).join('/')+'/?hl=ko'; }
   document.getElementById('vt').textContent=VIEWS[v].t;document.getElementById('vs').textContent=VIEWS[v].s;
