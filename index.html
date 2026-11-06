@@ -19,6 +19,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15p
 header h1{font-family:var(--display);font-size:clamp(26px,4vw,36px);margin:0;text-wrap:balance;letter-spacing:-.01em}
 header p{margin:6px 0 0;color:var(--muted);max-width:62ch}
 .tabs{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:640px){.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 4px;-webkit-overflow-scrolling:touch}.tabs::-webkit-scrollbar{display:none}.tabs button{flex:0 0 auto;font-size:13px;padding:7px 12px}}
 .tabs button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
 .tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--pinText)}
 .tabs button:focus-visible,.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -99,7 +100,7 @@ svg{display:block;width:100%;height:auto;max-width:100%}
     <span>● 들른 곳 &nbsp;■ 숙소</span>
   </div>
 </section>
-<p class="note">배경 지도 없이 실제 이동 기록만 그렸습니다. 아래 줄을 누르면 지도에서 그 장소가 표시됩니다.</p>
+<p class="note">구글 지도 위 선은 휴대폰 위치 기록으로 그린 실제 이동 경로입니다. 아래 장소를 누르면 지도가 그 장소로 이동합니다. 지도 오른쪽 위 네모 단추를 누르면 크게 볼 수 있습니다.</p>
 <div id="days"></div>
 </div>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="사진 크게 보기"><button class="x" id="lbx" aria-label="닫기">×</button><button class="ctl pv" id="lbp" aria-label="이전 사진">‹</button><img id="lbi" alt=""><button class="ctl nx" id="lbn" aria-label="다음 사진">›</button><div class="cap" id="lbc"></div></div>
